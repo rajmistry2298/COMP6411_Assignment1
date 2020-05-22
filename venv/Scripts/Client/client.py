@@ -1,4 +1,4 @@
-import socket
+import socket,pickle
 
 #Socket connection
 clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,29 +26,72 @@ while True:
     try:
         choice = int(input("Select Which Operation You Want to Perform : "))
         if choice == 1:
-            print("\nyou want to find customer")
-
-        elif choice == 2:
-            print("\nyou want to add new customer")
-
-        elif choice == 3:
-            print("\nyou want to delete customer")
-
-        elif choice == 4:
-            print("\nyou want to update customer age")
-
-        elif choice == 5:
-            print("\nyou want to update customer address")
-
-        elif choice == 6:
-            print("\nyou want to update customer phone")
-
-        elif choice == 7:
-            msg="7|print report"
+            str = "1|"
+            fname=input("Enter Customer Name To Find Record: ")
+            msg = str + fname
             clientsocket.send(msg.encode())
             smsg = clientsocket.recv(4096).decode()
             print(smsg)
 
+        elif choice == 2:
+            str = "2|"
+            print("-::Enter Details Of New Customer::-")
+            cname = input("Enter Customer's Name: ")
+            cage = input("Enter Customer's Age: ")
+            caddress = input("Enter Customer's Address: ")
+            cphone = input("Enter Customer's Phone: ")
+            msg = str + cname + "|" + cage + "|" + caddress + "|" + cphone
+            clientsocket.send(msg.encode())
+            smsg = clientsocket.recv(4096).decode()
+            print(smsg)
+
+        elif choice == 3:
+            str = "3|"
+            cname = input("Enter Customer's Name: ")
+            msg = str + cname
+            clientsocket.send(msg.encode())
+            smsg = clientsocket.recv(4096).decode()
+            print(smsg)
+
+        elif choice == 4:
+            str = "4|"
+            cname = input("Enter Customer's Name Whose Age You Want to Update: ")
+            cage = input("Enter New Age: ")
+            msg = str + cname + "|" + cage
+            clientsocket.send(msg.encode())
+            smsg = clientsocket.recv(4096).decode()
+            print(smsg)
+
+        elif choice == 5:
+            str = "5|"
+            cname = input("Enter Customer's Name Whose Address You Want to Update: ")
+            caddress = input("Enter New Address: ")
+            msg = str + cname + "|" + caddress
+            clientsocket.send(msg.encode())
+            smsg = clientsocket.recv(4096).decode()
+            print(smsg)
+
+        elif choice == 6:
+            str = "6|"
+            cname = input("Enter Customer's Name Whose Phone You Want to Update: ")
+            cphone = input("Enter New Phone: ")
+            msg = str + cname + "|" + cphone
+            clientsocket.send(msg.encode())
+            smsg = clientsocket.recv(4096).decode()
+            print(smsg)
+
+        elif choice == 7:
+            msg="7|print report"
+            clientsocket.send(msg.encode())
+            smsg = pickle.loads(clientsocket.recv(4096))
+            i = 1
+            print("________________________________________________CUSTOMER_REPORT___________________________________________________")
+            for key, values in smsg.items():
+                print("__________________________________________________________________________________________________________________")
+                print("  [ Record-", i, " : ", "|| Name: ", key, " || Age: ", values[0], " || Address: ", values[1],
+                      " || Phone: ", values[2], "]")
+                i = i + 1
+            print("__________________________________________________________________________________________________________________")
         elif choice == 8:
             msg = "8|Exit"
             clientsocket.send(msg.encode())
