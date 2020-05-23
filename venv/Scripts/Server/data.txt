@@ -9,3 +9,13 @@ Lana|23|74 Rue Catherine|514 798-5554
 Steve|52|316 Stone Cold|316 514-8544
 Hetang|23|57 Rajkot|514 911-5757
  |23|87 Wwe|518 8754-8888
+Jack|43|123 Apple street|514 428-3452
+Katyan| 26|49 Queen Mary Road|514 234-7654
+Ahmadabad|91|1888 Pepper Lane|
+Raja|22|2077 Tupper|438 877-5882
+Ritesh|23|2020 Windsor|519 488-7885
+Pauline|40|54 Heyman|438 877-6541
+Brocky|41|5 suplexcity|514 224-2546
+Stone|23|74 Rue Catherine|514 798-5554
+Nitesh|52|316 Stone Cold|316 514-8544
+Nita|23|57 Rajkot|514 911-5757
