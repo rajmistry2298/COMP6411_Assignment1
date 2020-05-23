@@ -15,7 +15,9 @@ for line in testFile:
     tp = x[3]
     phone = tp[0:len(tp) - 1]
     datalist = [x[1].strip(),x[2],phone]
-    dictionary[name] = (datalist)
+    if name!= " ":
+        dictionary[name] = (datalist)
+
 testFile.close()
 print("\nData Successfully Loaded From File!")
 
@@ -83,7 +85,8 @@ while True:
             clientsocket.send(senddata.encode())
 
         elif splitdata[0]=="7":
-            senddata = pickle.dumps(dictionary)
+            sorteddictionary = sorted(dictionary.items())
+            senddata = pickle.dumps(sorteddictionary)
             clientsocket.send(senddata)
 
         elif splitdata[0]=="8":

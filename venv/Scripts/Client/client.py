@@ -21,77 +21,107 @@ def display_menu():
     print("8. Exit")
     print("----------------------------\n")
 
+def getage():
+    try:
+        n = input("Enter Customer's Age(Positive Integer): ")
+        if n.isspace() or n=="":
+            return n
+        n1 =int(n)
+        if n1<0:
+            print("Enter Positive Value!")
+            getage()
+        return n1
+    except ValueError:
+        print("\nInvalid Input!! Please Enter Integer!")
+        getage()
+
+def getname():
+    customername = input("Enter Customer's Name: ")
+    if customername.isalpha():
+        return customername
+    if customername.isspace() or customername=="":
+        print("Name Can Not Be Empty Or WhiteSpace!!")
+        return getname()
+    print("Enter Alphabets Only(No Whitespaces Included)!!")
+    getname()
+
 while True:
     display_menu()
     try:
         choice = int(input("Select Which Operation You Want to Perform : "))
         if choice == 1:
-            str = "1|"
-            fname=input("Enter Customer Name To Find Record: ")
-            msg = str + fname
+            stringg = "1|"
+            print("::To Find Customer Enter Details::")
+            fname = getname()
+            msg = stringg + fname
             clientsocket.send(msg.encode())
             smsg = clientsocket.recv(4096).decode()
             print(smsg)
 
         elif choice == 2:
-            str = "2|"
+            stringg = "2|"
             print("-::Enter Details Of New Customer::-")
-            cname = input("Enter Customer's Name: ")
-            cage = input("Enter Customer's Age: ")
+            cname = getname()
+            cage = str(getage())
             caddress = input("Enter Customer's Address: ")
             cphone = input("Enter Customer's Phone: ")
-            msg = str + cname + "|" + cage + "|" + caddress + "|" + cphone
+            msg = stringg + cname + "|" + cage + "|" + caddress + "|" + cphone
             clientsocket.send(msg.encode())
             smsg = clientsocket.recv(4096).decode()
             print(smsg)
 
         elif choice == 3:
-            str = "3|"
-            cname = input("Enter Customer's Name: ")
-            msg = str + cname
+            stringg = "3|"
+            print("::To Delete Customer Enter Details::")
+            cname = str(getname())
+            msg = stringg + cname
             clientsocket.send(msg.encode())
             smsg = clientsocket.recv(4096).decode()
             print(smsg)
 
         elif choice == 4:
-            str = "4|"
-            cname = input("Enter Customer's Name Whose Age You Want to Update: ")
-            cage = input("Enter New Age: ")
-            msg = str + cname + "|" + cage
+            stringg = "4|"
+            print("::To Update Customer's Age Enter Details::")
+            cname = getname()
+            cage = getage()
+            msg = stringg + cname + "|" + str(cage)
             clientsocket.send(msg.encode())
             smsg = clientsocket.recv(4096).decode()
             print(smsg)
 
         elif choice == 5:
-            str = "5|"
-            cname = input("Enter Customer's Name Whose Address You Want to Update: ")
+            stringg = "5|"
+            print("::To Update Customer's Address Enter Details::")
+            cname = getname()
             caddress = input("Enter New Address: ")
-            msg = str + cname + "|" + caddress
+            msg = stringg + cname + "|" + caddress
             clientsocket.send(msg.encode())
             smsg = clientsocket.recv(4096).decode()
             print(smsg)
 
         elif choice == 6:
-            str = "6|"
-            cname = input("Enter Customer's Name Whose Phone You Want to Update: ")
+            stringg = "6|"
+            print("::To Update Customer's Phone Enter Details::")
+            cname = getname()
             cphone = input("Enter New Phone: ")
-            msg = str + cname + "|" + cphone
+            msg = stringg + cname + "|" + cphone
             clientsocket.send(msg.encode())
             smsg = clientsocket.recv(4096).decode()
             print(smsg)
 
         elif choice == 7:
-            msg="7|print report"
+            msg="7|printreport"
             clientsocket.send(msg.encode())
             smsg = pickle.loads(clientsocket.recv(4096))
             i = 1
             print("________________________________________________CUSTOMER_REPORT___________________________________________________")
-            for key, values in smsg.items():
+            for k in smsg:
                 print("__________________________________________________________________________________________________________________")
-                print("  [ Record-", i, " : ", "|| Name: ", key, " || Age: ", values[0], " || Address: ", values[1],
-                      " || Phone: ", values[2], "]")
+                print("  [ Record-", i, " : ", "|| Name: ", k[0], " || Age: ", k[1][0], " || Address: ", k[1][1],
+                      " || Phone: ", k[1][2], "]")
                 i = i + 1
             print("__________________________________________________________________________________________________________________")
+
         elif choice == 8:
             msg = "8|Exit"
             clientsocket.send(msg.encode())
@@ -100,10 +130,6 @@ while True:
         else:
             print("\nInvalid Choice!!! Please Enter valid Choice from 1 - 8")
 
-        '''msg = input("Enter your message: ")
-        clientsocket.send(msg.encode())
-        smsg = clientsocket.recv(4096).decode()
-        '''
         if not smsg:
             # if data is not received break
             break
