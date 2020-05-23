@@ -19,7 +19,7 @@ for line in testFile:
         dictionary[name] = (datalist)
 
 testFile.close()
-print("\nData Successfully Loaded From File!")
+print("\nData Loaded Successfully From The File(data.txt)!")
 
 #Main_Logic
 while True:
