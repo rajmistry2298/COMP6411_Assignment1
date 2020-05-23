@@ -11,16 +11,17 @@ testFile = open("data.txt","r")
 dictionary={}
 for line in testFile:
     x =line.split("|")
-    name = x[0]
+    name = x[0].strip()
     tp = x[3]
     phone = tp[0:len(tp) - 1]
-    datalist = [x[1].strip(),x[2],phone]
-    if name!= " ":
+    datalist = [x[1].strip(),x[2].strip(),phone.strip()]
+    if name!= "":
         dictionary[name] = (datalist)
 
 testFile.close()
 print("\nData Successfully Loaded From File!")
 
+#Main_Logic
 while True:
     #wait for Client to connect
     clientsocket, address = serversocket.accept()
@@ -92,8 +93,5 @@ while True:
         elif splitdata[0]=="8":
             clientsocket.send("Good Bye!!".encode())
             break
-
-        # data = input('Enter Reply:')
-        # clientsocket.send(data.encode())  # send data to the client
 
     # clientsocket.close()  # close the connection

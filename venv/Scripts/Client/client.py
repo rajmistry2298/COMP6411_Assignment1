@@ -21,30 +21,27 @@ def display_menu():
     print("8. Exit")
     print("----------------------------\n")
 
+#function for getting age from user with validations so that age accepts only Positive Integer
 def getage():
-    try:
-        n = input("Enter Customer's Age(Positive Integer): ")
-        if n.isspace() or n=="":
-            return n
-        n1 =int(n)
-        if n1<0:
-            print("Enter Positive Value!")
-            getage()
-        return n1
-    except ValueError:
-        print("\nInvalid Input!! Please Enter Integer!")
-        getage()
+    customerage=input("Enter Customer's Age: ")
+    if not customerage == "":
+      if not customerage.isdecimal():
+          if not customerage==" ":
+              print("Age must be positive Integer only!! Without any sLeading or Trailing or inbetween whitespace!")
+              customerage = getage()
+    return customerage
 
+#Functon or getting name from user with validations so that name must accepts only characters without any whitespace
+#And it can't be empty
 def getname():
     customername = input("Enter Customer's Name: ")
-    if customername.isalpha():
-        return customername
-    if customername.isspace() or customername=="":
-        print("Name Can Not Be Empty Or WhiteSpace!!")
-        return getname()
-    print("Enter Alphabets Only(No Whitespaces Included)!!")
-    getname()
+    if (customername.isalpha()) == False:
+        print("Invalid Input!!")
+        print("Name Can't be blank and Should contain only alphabets without any whitespace")
+        customername = getname()
+    return customername
 
+#Main_Logic
 while True:
     display_menu()
     try:
@@ -52,7 +49,7 @@ while True:
         if choice == 1:
             stringg = "1|"
             print("::To Find Customer Enter Details::")
-            fname = getname()
+            fname = str(getname())
             msg = stringg + fname
             clientsocket.send(msg.encode())
             smsg = clientsocket.recv(4096).decode()
@@ -83,8 +80,8 @@ while True:
             stringg = "4|"
             print("::To Update Customer's Age Enter Details::")
             cname = getname()
-            cage = getage()
-            msg = stringg + cname + "|" + str(cage)
+            cage = str(getage())
+            msg = stringg + cname + "|" + cage
             clientsocket.send(msg.encode())
             smsg = clientsocket.recv(4096).decode()
             print(smsg)
